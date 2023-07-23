@@ -1,6 +1,6 @@
 const Item = ({item}) => (
   <div>
-    {item.itemName} {item.startingBid}
+    {item.itemName} ${item.startingBid}
   </div>  
 )
 
