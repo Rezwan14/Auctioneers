@@ -47,7 +47,6 @@ const App = () => {
             element={
               <div>
                 Bid Page
-
               </div>
             }
           />
