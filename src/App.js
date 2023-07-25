@@ -4,6 +4,7 @@ import Item from './components/Items';
 import itemService from './services/items';
 import loginService from './services/login';
 import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 import './css/app.css';
 
@@ -69,56 +70,90 @@ const App = () => {
     window.location.href = '/';
   };
 
-  return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Auctioneers</Link>
-            </li>
-            <li>
-              <Link to="/items">Listings</Link>
-            </li>
+  const handleRegister = async (userData) => {
+    try {
+      const response = await fetch('/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
 
-            <li className="login-logout">
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+      alert('Registration successful!');
+      window.location.href = '/login';
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+
+return (
+  <Router>
+    <div>
+    <nav>
+          <ul>
+            <div className="left-links">
+              <li className="link-item">
+                <Link to="/">Auctioneer</Link>
+              </li>
+              <li className="link-item">
+                <Link to="/items">Listings</Link>
+              </li>
+            </div>
+            <div className="right-links">
               {user === null ? (
-                <span onClick={() => window.location.href = '/login'}>Login</span>
-              ) : (
-                <>
-                  <> Welcome back, {user.firstName} </>
-                  <button onClick={handleLogout} type="submit">logout</button>
-                </>
-              )}
-            </li>
+                <li className="link-item">
+                  <Link to="/register">Register</Link>
+                </li>
+              ) : null}
+              <li className="login-logout">
+                {user === null ? (
+                  <Link to="/login">Login</Link>
+                ) : (
+                  <>
+                    <> Welcome back, {user.firstName} </>
+                    <button onClick={handleLogout} type="submit">logout</button>
+                  </>
+                )}
+              </li>
+            </div>
           </ul>
         </nav>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route 
-            path="/items" 
-            element={<Listings items={items} />} />
-          <Route 
-            path="/bid/:id" 
-            element={<Bidding />} />
-          <Route
-            path="/login"
-            element={
-              <LoginForm
-                handleLogin={handleLogin}
-                username={username}
-                setUsername={setUsername}
-                setPassword={setPassword}
-                password={password}
-                onLoginSuccess={handleLoginSuccess}
-              />
-            }
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/items"
+          element={<Listings items={items} />} />
+        <Route
+          path="/bid/:id"
+          element={<Bidding />} />
+        <Route
+          path="/login"
+          element={
+            <LoginForm
+              handleLogin={handleLogin}
+              username={username}
+              setUsername={setUsername}
+              setPassword={setPassword}
+              password={password}
+              onLoginSuccess={handleLoginSuccess}
+            />
+          }
+        />
+        <Route
+            path="/register"
+            element={<RegisterForm handleRegister={handleRegister} />}
           />
-        </Routes>
-      </div>
-    </Router>
-  );
+      </Routes>
+    </div>
+  </Router>
+);
 };
 
 export default App;

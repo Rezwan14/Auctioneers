@@ -7,7 +7,7 @@ body {
 nav {
   background-color: #EBEBEB;
   padding: 10px;
-  position: relative; 
+  position: relative;
 }
 
 ul {
@@ -15,9 +15,21 @@ ul {
   margin: 0;
   padding: 0;
   display: flex;
+  align-items: center; 
+  justify-content: space-between; 
 }
 
-li {
+.left-links {
+  display: flex;
+  align-items: center;
+}
+
+.right-links {
+  display: flex;
+  align-items: center;
+}
+
+.link-item {
   margin-right: 20px;
 }
 
@@ -30,9 +42,6 @@ a {
 
 .login-logout {
   font-weight: bold;
-  position: absolute;
-  top: 10px;
-  right: 10px;
   display: flex;
   align-items: center;
 }
