@@ -5,6 +5,7 @@ import itemService from './services/items';
 import loginService from './services/login';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import AuctionForm from './components/AuctionForm'
 
 import './css/app.css';
 
@@ -91,6 +92,20 @@ const App = () => {
     }
   }
 
+  const handleCreateAuction = async (itemName, category, description, startingBid, startTime, startDate, endDate) => {
+    const auction = await itemService.create({
+      itemName,
+      category,
+      description,
+      startingBid,
+      startTime,
+      startDate,
+      endDate
+    })
+
+    setItems(items.concat(auction))
+  }
+
 
 return (
   <Router>
@@ -116,6 +131,7 @@ return (
                   <Link to="/login">Login</Link>
                 ) : (
                   <>
+                    <AuctionForm handleCreateAuction={handleCreateAuction} />
                     <> Welcome back, {user.firstName} </>
                     <button onClick={handleLogout} type="submit">logout</button>
                   </>
