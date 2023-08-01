@@ -53,3 +53,28 @@ a {
 .login-logout button {
   margin-left: 10px;
 }
+
+.ReactModal__Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ReactModal__Content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: fit-content; 
+  height: fit-content; 
+  position: relative;
+  max-width: 80%; 
+  max-height: 80%; 
+  margin: 0 auto; 
+}
