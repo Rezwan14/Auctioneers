@@ -10,12 +10,11 @@ const AuctionForm = ({ handleCreateAuction }) => {
     startingBid: 0,
     startTime: '',
     startDate: '',
-    endDate: '',
   });
 
   const createItem = (event) => {
     event.preventDefault();
-    handleCreateAuction(newItem.itemName, newItem.category, newItem.description, newItem.startingBid, newItem.startTime, newItem.startDate, newItem.endDate,
+    handleCreateAuction(newItem.itemName, newItem.category, newItem.description, newItem.startingBid, newItem.startTime, newItem.startDate,
     );
     setNewItem({
       itemName: '',
@@ -24,7 +23,6 @@ const AuctionForm = ({ handleCreateAuction }) => {
       startingBid: 0,
       startTime: '',
       startDate: '',
-      endDate: '',
     });
     setShowModal(false);
   };
@@ -101,16 +99,6 @@ const AuctionForm = ({ handleCreateAuction }) => {
               name="startDate"
               placeholder="Start Date"
               value={newItem.startDate}
-              onChange={handleInput}
-            />
-          </div>
-          <div>
-            End Date:
-            <input
-              type="date"
-              name="endDate"
-              placeholder="End Date"
-              value={newItem.endDate}
               onChange={handleInput}
             />
           </div>

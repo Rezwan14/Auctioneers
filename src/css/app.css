@@ -78,3 +78,7 @@ a {
   max-height: 80%; 
   margin: 0 auto; 
 }
+
+.ReactModal__Content input {
+  margin-bottom: 10px;
+}

@@ -92,7 +92,7 @@ const App = () => {
     }
   }
 
-  const handleCreateAuction = async (itemName, category, description, startingBid, startTime, startDate, endDate) => {
+  const handleCreateAuction = async (itemName, category, description, startingBid, startTime, startDate) => {
     const auction = await itemService.create({
       itemName,
       category,
@@ -100,7 +100,6 @@ const App = () => {
       startingBid,
       startTime,
       startDate,
-      endDate
     })
 
     setItems(items.concat(auction))
