@@ -6,6 +6,7 @@ import loginService from './services/login';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import AuctionForm from './components/AuctionForm'
+import CreditCardForm from './components/CreditCardForm';
 
 import './css/app.css';
 
@@ -28,6 +29,10 @@ const Listings = ({ items }) => {
 
 const Bidding = () => {
   return <div>Bid Page</div>;
+};
+
+const CreditCard = () => {
+  return <div><CreditCardForm /> </div>
 };
 
 const App = () => {
@@ -118,6 +123,9 @@ return (
               <li className="link-item">
                 <Link to="/items">Listings</Link>
               </li>
+              <li className="link-item">
+              <CreditCardForm CreditCard ={CreditCard}/>
+              </li>
             </div>
             <div className="right-links">
               {user === null ? (
@@ -139,12 +147,15 @@ return (
             </div>
           </ul>
         </nav>
-
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/items"
           element={<Listings items={items} />} />
+        <Route
+          path="/items"
+          element={<CreditCard items={CreditCard} />} />
         <Route
           path="/bid/:id"
           element={<Bidding />} />
