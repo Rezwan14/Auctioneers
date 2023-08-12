@@ -32,8 +32,8 @@ const AuctionList = () => {
     useEffect(() => {
         axios.get('http://localhost:3000/api/auction/my', {
             headers: {
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTc2NzIzNSwiZXhwIjoxNjkxODAzMjM1fQ.2Vv1krQaLHWu7270u-YLHF66_DcHclcJnF3MJtfQLR0'
-            }
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTg3MjI2NiwiZXhwIjoxNjkxOTA4MjY2fQ.viPjMQj3awafBjGhFtlLeZg6aA21rWHT64gc472CZmw'
+            }     
         })
             .then(response => {
                 setAuctions(response.data.data);
