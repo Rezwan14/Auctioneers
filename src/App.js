@@ -9,20 +9,67 @@ import AuctionForm from './components/AuctionForm'
 import CreditCardForm from './components/CreditCardForm';
 
 import './css/app.css';
+const colorPalette = [
+  '#FFA500',
+  '#42a5f5',
+  '#66bb6a',
+  '#ec407a',
+  '#ffca28'
+];
 
-const Home = () => {
-  return <div>Home Page</div>;
+const Home = ({ items }) => {
+  const featuredItem = items.reduce((maxBidItem, currentItem) => {
+    if (currentItem.startingBid > maxBidItem.startingBid) {
+      return currentItem;
+    }
+    return maxBidItem;
+  }, items[0]);
+
+  return (
+    <div className="center-content featured-item-section home-page">
+      <h2 className="featured-item-heading">Featured Item</h2>
+      {featuredItem ? (
+        <div className="item-box">
+           <Link to={`/bid/${featuredItem.id}`} className="item-link">
+            <h3 className="item-name">{featuredItem.itemName}</h3> </Link>
+          <div className="item-component">
+            <span className="category-text">Category:</span> {featuredItem.category}
+          </div>
+          <div className="item-component">
+            <span className="description-text">Description:</span> {featuredItem.description}
+          </div>
+          <div className="item-component">
+            <span className="starting-bid-text">Starting Bid:</span> ${featuredItem.startingBid}
+          </div>
+          <div className="item-component">
+            <span className="participants-text">Participants:</span> {featuredItem.participants}
+          </div>
+        </div>
+      ) : (
+        <p>No featured item available.</p>
+      )}
+    </div>
+  );
 };
 
 const Listings = ({ items }) => {
   return (
     <div>
-      <h2>Items</h2>
-      {items.map((item) => (
-        <Link key={item.id} to={`/bid/${item.id}`}>
-          <Item item={item} />
-        </Link>
-      ))}
+      <div className="listings-container">
+        {items.map((item, index) => (
+          <Link key={item.id} to={`/bid/${item.id}`} className="listing-item">
+             <div className="listing-item-box" style={{ backgroundColor: colorPalette[index % colorPalette.length] }}>
+              <h3 className="listing-name">{item.itemName}</h3>
+              <div className="listing-category">
+                Category: {item.category}
+              </div>
+              <div className="listing-description">
+                Description: {item.description}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
@@ -111,10 +158,10 @@ const App = () => {
   }
 
 
-return (
-  <Router>
-    <div>
-    <nav>
+  return (
+    <Router>
+      <div className="color-palette">
+        <nav>
           <ul>
             <div className="left-links">
               <li className="link-item">
@@ -124,7 +171,7 @@ return (
                 <Link to="/items">Listings</Link>
               </li>
               <li className="link-item">
-              <CreditCardForm CreditCard ={CreditCard}/>
+                <CreditCardForm CreditCard={CreditCard} />
               </li>
             </div>
             <div className="right-links">
@@ -147,39 +194,42 @@ return (
             </div>
           </ul>
         </nav>
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/items"
-          element={<Listings items={items} />} />
-        <Route
-          path="/items"
-          element={<CreditCard items={CreditCard} />} />
-        <Route
-          path="/bid/:id"
-          element={<Bidding />} />
-        <Route
-          path="/login"
-          element={
-            <LoginForm
-              handleLogin={handleLogin}
-              username={username}
-              setUsername={setUsername}
-              setPassword={setPassword}
-              password={password}
-              onLoginSuccess={handleLoginSuccess}
-            />
-          }
-        />
-        <Route
+
+        <Routes>
+          <Route
+            path="/"
+            element={<Home items={items} />}
+          />
+          <Route
+            path="/items"
+            element={<Listings items={items} />} />
+          <Route
+            path="/items"
+            element={<CreditCard items={CreditCard} />} />
+          <Route
+            path="/bid/:id"
+            element={<Bidding />} />
+          <Route
+            path="/login"
+            element={
+              <LoginForm
+                handleLogin={handleLogin}
+                username={username}
+                setUsername={setUsername}
+                setPassword={setPassword}
+                password={password}
+                onLoginSuccess={handleLoginSuccess}
+              />
+            }
+          />
+          <Route
             path="/register"
             element={<RegisterForm handleRegister={handleRegister} />}
           />
-      </Routes>
-    </div>
-  </Router>
-);
+        </Routes>
+      </div>
+    </Router>
+  );
 };
 
 export default App;

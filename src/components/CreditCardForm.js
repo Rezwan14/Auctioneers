@@ -25,7 +25,7 @@ const CreditCardForm = ({ username }) => {
 
   return (
     <div>
-      <h2>Link Credit Card</h2>
+      <li>Link Credit Card</li>
       {linked ? (
         <p>Credit card linked successfully!</p>
       ) : (

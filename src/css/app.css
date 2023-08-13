@@ -10,6 +10,75 @@ nav {
   position: relative;
 }
 
+.home-page {
+  background-color: #3F000F;
+  min-height: 100vh;
+}
+
+.featured-item-section {
+  background-color: #3F000F;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+}
+
+.featured-item-heading {
+  font-size: 125px;
+  font-family: Impact, sans-serif;
+  font-weight: bold;
+  margin-top: -150px;
+  margin-bottom: 5px;
+  text-shadow: 10px 10px 10px black;
+}
+
+.item-box {
+  background-color: #8F8D8D;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.item-box .item-name {
+  font-size: 50px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #FFA500;
+  text-shadow: 3px 3px 3px black;
+}
+
+.item-box .item-component {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.category-text {
+  color: #000000;
+  font-weight: bold;
+}
+
+.description-text {
+  color: #000000; 
+  font-weight: bold;
+}
+
+.starting-bid-text {
+  color: #000000;
+  font-weight: bold;
+}
+
+.participants-text {
+  color: #000000;
+  font-weight: bold;
+}
+
 ul {
   list-style: none;
   margin: 0;
@@ -35,7 +104,7 @@ ul {
 
 a {
   text-decoration: none;
-  font-size: medium;
+  font-size: large;
   color: #000000;
   font-weight: bold;
 }
@@ -81,4 +150,49 @@ a {
 
 .ReactModal__Content input {
   margin-bottom: 10px;
+}
+
+.listings-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 0px;
+  margin-left: -10px;
+  border-top: 20px solid #3F000F; 
+  padding-top: 0px; 
+}
+
+.listing-item {
+  width: calc(33.33% - 20px);
+  margin: 0 10px 20px;
+}
+
+.listing-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 3px 3px 3px black;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.listing-category {
+  font-size: 16px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.listing-description {
+  font-size: 16px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.listing-item-box {
+  background-color: #8F8D8D;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
 }
