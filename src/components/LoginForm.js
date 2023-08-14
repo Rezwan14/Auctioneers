@@ -8,31 +8,37 @@ const LoginForm = ({ handleLogin, setUsername, setPassword, username, password, 
   };
 
   return (
-    <div>
-      <h2>Log in to application</h2>
-      <form onSubmit={handleLoginFormSubmit}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
+    <div className="lr-outer-container">
+      <div className="lr-container">
+        <h2 className="lr-heading">Log in to application</h2>
+        <div className="lr-box">
+          <form className="lr-form" onSubmit={handleLoginFormSubmit}>
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                name="Username"
+                onChange={({ target }) => setUsername(target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                name="Password"
+                onChange={({ target }) => setPassword(target.value)}
+              />
+            </div>
+            <button id="lrbutton" type="submit">
+              Login
+            </button>
+          </form>
         </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button id="loginbutton" type="submit">
-          Login
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
@@ -43,7 +49,7 @@ LoginForm.propTypes = {
   setPassword: PropTypes.func.isRequired,
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  onLoginSuccess: PropTypes.func.isRequired, 
+  onLoginSuccess: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

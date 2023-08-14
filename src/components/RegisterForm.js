@@ -25,10 +25,12 @@ const RegisterForm = ({ handleRegister }) => {
   };
 
   return (
-    <div>
-      <h2>Register for an account</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="lr-outer-container">
+      <div className="lr-container">
+      <h2 className="lr-heading">Register for an account</h2>
+      <div className="lr-box">
+      <form className="lr-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <label>Username:</label>
           <input
             type="text"
@@ -36,7 +38,7 @@ const RegisterForm = ({ handleRegister }) => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
@@ -44,7 +46,7 @@ const RegisterForm = ({ handleRegister }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>First Name:</label>
           <input
             type="text"
@@ -52,7 +54,7 @@ const RegisterForm = ({ handleRegister }) => {
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Last Name:</label>
           <input
             type="text"
@@ -60,7 +62,7 @@ const RegisterForm = ({ handleRegister }) => {
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Email:</label>
           <input
             type="email"
@@ -68,7 +70,7 @@ const RegisterForm = ({ handleRegister }) => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Birthday:</label>
           <input
             type="date"
@@ -76,7 +78,7 @@ const RegisterForm = ({ handleRegister }) => {
             onChange={(e) => setBirthday(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Country:</label>
           <input
             type="text"
@@ -84,8 +86,10 @@ const RegisterForm = ({ handleRegister }) => {
             onChange={(e) => setCountry(e.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
+        <button id="lrbutton" type="submit">Register</button>
       </form>
+      </div>
+      </div> 
     </div>
   );
 };

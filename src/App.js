@@ -30,7 +30,7 @@ const Home = ({ items }) => {
       <h2 className="featured-item-heading">Featured Item</h2>
       {featuredItem ? (
         <div className="item-box">
-           <Link to={`/bid/${featuredItem.id}`} className="item-link">
+          <Link to={`/bid/${featuredItem.id}`} className="item-link">
             <h3 className="item-name">{featuredItem.itemName}</h3> </Link>
           <div className="item-component">
             <span className="category-text">Category:</span> {featuredItem.category}
@@ -58,7 +58,7 @@ const Listings = ({ items }) => {
       <div className="listings-container">
         {items.map((item, index) => (
           <Link key={item.id} to={`/bid/${item.id}`} className="listing-item">
-             <div className="listing-item-box" style={{ backgroundColor: colorPalette[index % colorPalette.length] }}>
+            <div className="listing-item-box" style={{ backgroundColor: colorPalette[index % colorPalette.length] }}>
               <h3 className="listing-name">{item.itemName}</h3>
               <div className="listing-category">
                 Category: {item.category}
@@ -212,19 +212,25 @@ const App = () => {
           <Route
             path="/login"
             element={
-              <LoginForm
-                handleLogin={handleLogin}
-                username={username}
-                setUsername={setUsername}
-                setPassword={setPassword}
-                password={password}
-                onLoginSuccess={handleLoginSuccess}
-              />
+              <div className="login-page">
+                <LoginForm
+                  handleLogin={handleLogin}
+                  username={username}
+                  setUsername={setUsername}
+                  setPassword={setPassword}
+                  password={password}
+                  onLoginSuccess={handleLoginSuccess}
+                />
+              </div>
             }
           />
           <Route
             path="/register"
-            element={<RegisterForm handleRegister={handleRegister} />}
+            element={
+              <div className="login-page">
+            <RegisterForm handleRegister={handleRegister} />
+            </div>
+            }
           />
         </Routes>
       </div>
