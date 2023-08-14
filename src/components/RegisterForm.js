@@ -12,6 +12,7 @@ const RegisterForm = ({ handleRegister }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    //create user data object from form fields
     const userData = {
       username,
       password,

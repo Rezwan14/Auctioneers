@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 const LoginForm = ({ handleLogin, setUsername, setPassword, username, password, onLoginSuccess }) => {
   const handleLoginFormSubmit = async (event) => {
     event.preventDefault()
+    //call hadnlelogin to perform login and onLoginSuccess to handle successful login
     await handleLogin(event)
     onLoginSuccess()
   };

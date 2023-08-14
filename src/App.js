@@ -9,6 +9,8 @@ import AuctionForm from './components/AuctionForm'
 import CreditCardForm from './components/CreditCardForm';
 
 import './css/app.css';
+
+//color palette for item boxes
 const colorPalette = [
   '#FFA500',
   '#42a5f5',
@@ -17,6 +19,7 @@ const colorPalette = [
   '#ffca28'
 ];
 
+//functional compoenent for homepage, uses highest bidded item
 const Home = ({ items }) => {
   const featuredItem = items.reduce((maxBidItem, currentItem) => {
     if (currentItem.startingBid > maxBidItem.startingBid) {
@@ -31,6 +34,7 @@ const Home = ({ items }) => {
       {featuredItem ? (
         <div className="item-box">
           <Link to={`/bid/${featuredItem.id}`} className="item-link">
+            {/*able to click on title to go to bid page */}
             <h3 className="item-name">{featuredItem.itemName}</h3> </Link>
           <div className="item-component">
             <span className="category-text">Category:</span> {featuredItem.category}
@@ -52,6 +56,7 @@ const Home = ({ items }) => {
   );
 };
 
+//display all item lists and clickable boxes to go to bid page
 const Listings = ({ items }) => {
   return (
     <div>
@@ -74,6 +79,7 @@ const Listings = ({ items }) => {
   );
 };
 
+//bidding page 
 const Bidding = () => {
   return <div>Bid Page</div>;
 };
@@ -104,10 +110,12 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const user = await loginService.login({ username, password });
+    const user = await loginService.login({ username, password });//autenticate and retrieve user
 
-    window.localStorage.setItem('loggedappUser', JSON.stringify(user));
+    window.localStorage.setItem('loggedappUser', JSON.stringify(user));//store user data in storage
     itemService.setToken(user.token);
+
+    //update user state and clear credentials
     setUser(user);
     setUsername('');
     setPassword('');
@@ -115,7 +123,7 @@ const App = () => {
 
   const handleLogout = (event) => {
     event.preventDefault();
-    window.localStorage.clear();
+    window.localStorage.clear();//clear user data from local storage
     setUser(null);
   };
 
@@ -125,7 +133,7 @@ const App = () => {
 
   const handleRegister = async (userData) => {
     try {
-      const response = await fetch('/api/users/register', {
+      const response = await fetch('/api/users/register', {//send user registration data to server
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,7 +141,7 @@ const App = () => {
         body: JSON.stringify(userData),
       });
 
-      if (!response.ok) {
+      if (!response.ok) {//alert and redirect to login
         const errorMessage = await response.text();
         throw new Error(errorMessage);
       }
@@ -145,6 +153,7 @@ const App = () => {
   }
 
   const handleCreateAuction = async (itemName, category, description, startingBid, startTime, startDate) => {
+    //create auction item and update item state
     const auction = await itemService.create({
       itemName,
       category,
