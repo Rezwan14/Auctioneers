@@ -251,7 +251,7 @@ const App = () => {
           />
           <Route
             path="/cc"
-            element={<CreditCardForm username={user.username} />}
+            element={<CreditCardForm username={user} />}
           />
         </Routes>
 
