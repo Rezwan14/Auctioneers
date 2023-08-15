@@ -1,31 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Typography, Button, Dropdown } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UserOutlined, LogoutOutlined, LoginOutlined, UserAddOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 const { Header: AntHeader } = Layout;
 const { Text } = Typography;
 
-const menu = (
-    <Menu>
-        <Menu.Item key="1" icon={<LogoutOutlined />}>
-            Logout
-        </Menu.Item>
-    </Menu>
-);
+const menu = () => {
+    return (
+        <Menu>
+            <Menu.Item key="1" icon={<LogoutOutlined />} onClick={() => {
+                localStorage.clear()
+                window.location.href = "/"
+            }}>
+                Logout
+            </Menu.Item>
+        </Menu>
+    )
+}
 
 const Header = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [user, setUser] = useState(null);
+
+    const loggedUserJSON = window.localStorage.getItem("loggedappUser");
+    useEffect(() => {
+        if (loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON);
+            setUser(user);
+            setIsLoggedIn(true);
+        }
+    }, [loggedUserJSON]);
     return (
-        <AntHeader className='d-flex' style={{ position: 'fixed', zIndex: 1, width: '100%', top: 0, justifyContent: 'space-between', alignItems: 'center' }}>
+        <AntHeader>
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                <h3 className='mt-3 mr-5'>AUCTIONEERS</h3>
-                <Menu.Item key="1">Listing</Menu.Item>
+                <Menu.Item key="0">
+                    <Link to="/">AUCTIONEERS</Link>
+                </Menu.Item>
+                {
+                    isLoggedIn ?
+                        <>
+                            <Menu.Item key="1">
+                                <Link to="/listing">Listing</Link>
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                                Welcome Back, {user?.firstName}
+                            </Menu.Item>
+                            <Menu.Item key="3">
+                                <Dropdown overlay={menu(isLoggedIn)} placement="bottomRight" arrow>
+                                    <Button icon={<UserOutlined />} type="text" style={{ color: 'white' }} />
+                                </Dropdown>
+                            </Menu.Item></>
+                        :
+                        <>
+                            <Menu.Item key="1" icon={<UserOutlined />}>
+                                <Link to="/login">Login</Link>
+                            </Menu.Item>
+                            <Menu.Item key="2" icon={<UserAddOutlined />}>
+                                <Link to="/register">Register</Link>
+                            </Menu.Item>
+                        </>
+                }
             </Menu>
-            <div style={{ display: 'flex', alignItems: 'center', marginRight: '24px' }}>
-                <Text style={{ marginRight: '16px', color: 'white' }}>Welcome Back, Profilename</Text>
-                <Dropdown overlay={menu} placement="bottomRight" arrow>
-                    <Button icon={<UserOutlined />} type="text" style={{ color: 'white' }} />
-                </Dropdown>
-            </div>
         </AntHeader>
     );
 };

@@ -14,7 +14,7 @@ export const ParticipantsList = ({ auctionId }) => {
 
 
     const getBid = () => {
-        axios.get(`http://localhost:3000/api/bid/specificAuctionByUser/${auctionId}`, {
+        axios.get(`http://localhost:3003/api/bid/specificAuctionByUser/${auctionId}`, {
             headers: {
                 Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTg3MjI2NiwiZXhwIjoxNjkxOTA4MjY2fQ.viPjMQj3awafBjGhFtlLeZg6aA21rWHT64gc472CZmw'
             }

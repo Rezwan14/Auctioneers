@@ -1,12 +1,10 @@
 import React from 'react';
 import { Layout, Row, Col, Typography, Input, Button, Card, Divider, List, Avatar } from 'antd';
-import auctionImg from "./assets/download.JFIF"
 import { ParticipantsList } from './Participants';
 import CountdownTimer from './CountDownTimer';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import moment from 'moment';
-import BidForm from './BidForm';
 const { Title, Text } = Typography;
 
 
@@ -37,9 +35,9 @@ const AuctionDetail = () => {
 
     return (
         <div >
-            <Button style={{ marginTop: '100px', marginLeft: '30px' }} type='primary' onClick={() => {
+            <Button style={{ marginTop: '10px', marginLeft: '30px' }} type='primary' onClick={() => {
                 localStorage.clear()
-                window.location.href = "/"
+                window.location.href = "/listing"
             }}>Back</Button>
             <Layout style={{ padding: '24px', marginTop: '20px', minHeight: '80vh' }}>
 
@@ -50,18 +48,38 @@ const AuctionDetail = () => {
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
-                        <Card style={{ height: '70vh' }}>
-                            <Title level={2}>{auction?.name}</Title>
-                            <Title level={5}>{auction?.description}</Title>
-                            <Divider />
-                            <Title className='mb-0' level={4}>Starting Bid: {auction?.startingBid}</Title>
-                            <Title className='mb-1' level={4}>Current Heighest Bid: {auction?.currentBid}</Title>
-                            <br />
-                            <div style={{ fontSize: '15px', right: 10, bottom: 0, position: 'absolute' }}>
-                                <h6 >End Date & time:</h6>
-                                <p > {moment(auction?.endDate).format("LLLL")}</p>
+                        <Card
+                            style={{
+                                height: '70vh',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                padding: '20px',
+                            }}
+                        >
+                            <div>
+                                <Title level={2} style={{ color: '#1890ff', marginBottom: '4px' }}>
+                                    {auction?.itemName}
+                                </Title>
+                                <Text type="secondary" style={{ marginBottom: '16px' }}>
+                                    {auction?.category}
+                                </Text>
+                                <p>{auction?.description}</p>
+                                <Divider />
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Text strong>Starting Bid:</Text>
+                                    <Text>{auction?.startingBid}</Text>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Text strong>Current Highest Bid:</Text>
+                                    <Text>{auction?.currentBid}</Text>
+                                </div>
                             </div>
-
+                            <div className='mt-5' style={{ fontSize: '14px', color: '#999', textAlign: 'right' }}>
+                                <Text strong>End Date & Time:</Text>
+                                <br />
+                                <Text>{moment(auction?.endDate).format("LLLL")}</Text>
+                            </div>
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -73,7 +91,7 @@ const AuctionDetail = () => {
                         </Card>
                         <Card style={{ marginTop: '24px', height: '58vh' }}>
                             <Title level={4}>Participants</Title>
-                            <ParticipantsList auctionId={auction?._id} />
+                            <ParticipantsList auctionId={auction?.id} />
                         </Card>
                     </Col>
                 </Row>

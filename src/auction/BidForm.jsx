@@ -29,9 +29,10 @@ const BidForm = ({ auctionId, getBid }) => {
                 coverLetter: coverLetter,
             };
 
-            axios.post(`http://localhost:3000/api/bid/create/${auctionId}`, bidData, {
+            axios.post(`http://localhost:3003/api/bid/create/${auctionId}`, bidData, {
                 headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTg3MjI2NiwiZXhwIjoxNjkxOTA4MjY2fQ.viPjMQj3awafBjGhFtlLeZg6aA21rWHT64gc472CZmw'}
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTg3MjI2NiwiZXhwIjoxNjkxOTA4MjY2fQ.viPjMQj3awafBjGhFtlLeZg6aA21rWHT64gc472CZmw'
+                }
             })
                 .then(response => {
                     console.log('Bid placed successfully:', response.data);

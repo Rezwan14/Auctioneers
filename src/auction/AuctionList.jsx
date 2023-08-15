@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Card, Divider, Spin } from 'antd'; // Import Spin
 import axios from 'axios';
 import moment from 'moment/moment';
-import auctionImg from "./assets/download.JFIF"
+// import auctionImg from "./assets/download.JFIF"
 import AuctionDetail from './AuctionDetails';
+import itemService from "../services/items";
 
 const { Title } = Typography;
 
 const AuctionList = () => {
+    const [items, setItems] = useState([]);
+
     const [auctions, setAuctions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -17,7 +20,7 @@ const AuctionList = () => {
     function getAuctionIdFromUrl(url) {
         const parts = url.split('/');
         const auctionId = parts[parts.length - 1];
-        if (auctionId)
+        if (auctionId !== "listing")
             localStorage.setItem("auctionId", auctionId)
     }
 
@@ -30,19 +33,23 @@ const AuctionList = () => {
     }, [localStorageAuctionid])
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/auction/my', {
-            headers: {
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTg3MjI2NiwiZXhwIjoxNjkxOTA4MjY2fQ.viPjMQj3awafBjGhFtlLeZg6aA21rWHT64gc472CZmw'
-            }     
-        })
-            .then(response => {
-                setAuctions(response.data.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setLoading(false);
-            });
+        itemService.getAll().then((items) => {
+            setAuctions(items)
+            setLoading(false);
+        });
+        // axios.get('http://localhost:3000/api/auction/my', {
+        //     headers: {
+        //         Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTg3MjI2NiwiZXhwIjoxNjkxOTA4MjY2fQ.viPjMQj3awafBjGhFtlLeZg6aA21rWHT64gc472CZmw'
+        //     }
+        // })
+        //     .then(response => {
+        //         setAuctions(response.data.data);
+        //         setLoading(false);
+        //     })
+        //     .catch(error => {
+        //         setError(error);
+        //         setLoading(false);
+        //     });
     }, []);
 
     if (loading) {
@@ -71,7 +78,7 @@ const AuctionList = () => {
 
     const handleCardClick = (auction) => {
         localStorage.setItem("auctionDetails", JSON.stringify(auction))
-        window.location.href = `/auction/${auction._id}`
+        window.location.href = `/listing/${auction.id}`
     };
 
     const image_urls = [
@@ -91,22 +98,34 @@ const AuctionList = () => {
             {
                 isAuctionDetailPage ? <AuctionDetail />
                     :
-                    <div className='' style={{ padding: '24px', marginTop: '100px' }}>
+                    <div className='' style={{ padding: '24px', marginTop: '10px' }}>
                         <Title level={2}>Auction List</Title>
                         <Divider />
-                        <Row gutter={[16, 16]} className='p-5'>
+                        <Row gutter={[16, 16]} className='p-2'>
                             {auctions && auctions.length > 0 ? auctions.map((auction, index) => (
-                                <Col xs={24} sm={12} md={6} lg={6} xl={6} key={auction.id} className='pl-5 pr-5 '>
+                                <Col xs={24} sm={12} md={6} lg={6} xl={6} key={auction.id} className='p-2 '>
                                     <Card
-                                        hoverable // This adds the hover effect
-                                        cover={<img alt={`Auction ${auction.id}`} src={image_urls[index]} />}
-                                        onClick={() => handleCardClick(auction)} // Attach the click handler to navigate to the detail page
+                                        style={{ height: '380px' }}
+                                        hoverable
+                                        onClick={() => handleCardClick(auction)}
                                     >
-                                        <Title level={4}>{auction.name}</Title>
-                                        <p>{auction.description}</p>
-                                        <div className='mt-2 mb-2' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                        <div style={{
+                                            background: '#6fb9ff',
+                                            padding: '60px',
+                                            textAlign: 'center',
+                                            borderRadius: '10px',
+                                            height: '180px'
+                                        }}>
+                                            <h4>{auction.itemName.substr(0, 20) + "..."}</h4>
+                                        </div>
+                                        <div className='mt-2 '>
+                                            <h6 className='mt-1'>By: {auction?.user.lastName}</h6>
+                                            <p>{auction.description.substr(0, 40) + "..."}</p>
+                                        </div>
+                                        <p>Category:{auction.category}</p>
+                                        <div className='mt-2 mb-0' style={{ display: 'flex', justifyContent: 'space-between' }}>
                                             <h6>Starting Bid: {auction.startingBid}</h6>
-                                            <h6>Current Bid: {auction.currentBid}</h6>
+                                            <h6 >Current Bid: {auction.currentBid}</h6>
                                         </div>
                                         <p style={{ fontSize: '12px' }}>End Date & time: {moment(auction.endDate).format("LLLL")}</p>
                                     </Card>
