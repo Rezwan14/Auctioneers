@@ -7,6 +7,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import AuctionForm from './components/AuctionForm'
 import CreditCardForm from './components/CreditCardForm';
+import UserProfile from './components/UserProfile'
 
 import './css/app.css';
 
@@ -179,9 +180,6 @@ const App = () => {
               <li className="link-item">
                 <Link to="/items">Listings</Link>
               </li>
-              <li className="link-item">
-                <CreditCardForm CreditCard={CreditCard} />
-              </li>
             </div>
             <div className="right-links">
               {user === null ? (
@@ -194,6 +192,12 @@ const App = () => {
                   <Link to="/login">Login</Link>
                 ) : (
                   <>
+                    <li className="link-item">
+                      <Link to="/cc"> CreditCard </Link>
+                    </li>
+                    <li className="link-item">
+                      <Link to="/user-profile"> User Profile</Link>
+                    </li>
                     <AuctionForm handleCreateAuction={handleCreateAuction} />
                     <> Welcome back, {user.firstName} </>
                     <button onClick={handleLogout} type="submit">logout</button>
@@ -237,11 +241,20 @@ const App = () => {
             path="/register"
             element={
               <div className="login-page">
-            <RegisterForm handleRegister={handleRegister} />
-            </div>
+                <RegisterForm handleRegister={handleRegister} />
+              </div>
             }
           />
+          <Route
+            path="/user-profile"
+            element={<UserProfile />}
+          />
+          <Route
+            path="/cc"
+            element={<CreditCardForm username={user.username} />}
+          />
         </Routes>
+
       </div>
     </Router>
   );
