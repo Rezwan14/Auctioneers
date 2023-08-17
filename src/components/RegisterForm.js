@@ -1,96 +1,101 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import {
+  Form,
+  Input,
+  Button,
+  Typography,
+  DatePicker,
+  Select,
+  Card,
+} from "antd";
+
+const { Title } = Typography;
+const { Option } = Select;
 
 const RegisterForm = ({ handleRegister }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [country, setCountry] = useState('');
+  const [form] = Form.useForm();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    //create user data object from form fields
-    const userData = {
-      username,
-      password,
-      firstName,
-      lastName,
-      email,
-      birthday,
-      country,
-    };
-    handleRegister(userData);
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+      handleRegister(values);
+    } catch (error) {
+      console.log("Form validation failed:", error);
+    }
   };
 
   return (
-    <div className="lr-outer-container">
-      <div className="lr-container">
-      <h2 className="lr-heading">Register for an account</h2>
-      <div className="lr-box">
-      <form className="lr-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>First Name:</label>
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Last Name:</label>
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Birthday:</label>
-          <input
-            type="date"
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Country:</label>
-          <input
-            type="text"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          />
-        </div>
-        <button id="lrbutton" type="submit">Register</button>
-      </form>
+    <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "600px",
+          marginTop: "200px",
+          marginBottom: "30px",
+        }}
+      >
+        <Card style={{ width: 600, padding: 30 }}>
+          <Title level={2} style={{ textAlign: "center", marginBottom: 20 }}>
+            Register for an Account
+          </Title>
+          <Form form={form} onFinish={handleSubmit} layout="vertical">
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[
+                { required: true, message: "Please enter your username" },
+              ]}
+            >
+              <Input placeholder="Username" />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                { required: true, message: "Please enter your password" },
+              ]}
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+            <Form.Item label="First Name" name="firstName">
+              <Input placeholder="First Name" />
+            </Form.Item>
+            <Form.Item label="Last Name" name="lastName">
+              <Input placeholder="Last Name" />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                { required: true, message: "Please enter your email" },
+                { type: "email", message: "Invalid email format" },
+              ]}
+            >
+              <Input placeholder="Email" />
+            </Form.Item>
+            <Form.Item label="Birthday" name="birthday">
+              <DatePicker style={{ width: "100%" }} placeholder="Birthday" />
+            </Form.Item>
+            <Form.Item label="Country" name="country">
+              <Select placeholder="Select a country">
+                <Option value="us">United States</Option>
+                <Option value="uk">United Kingdom</Option>
+                <Option value="ca">Canada</Option>
+                {/* Add more countries */}
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                Register
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
       </div>
-      </div> 
+      <br />
     </div>
   );
 };

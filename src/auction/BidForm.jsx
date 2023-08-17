@@ -21,8 +21,11 @@ const BidForm = ({ auctionId, getBid }) => {
     };
 
     const handlePlaceBid = () => {
+        let userId = localStorage.getItem("loggedappUser")
+        userId = JSON.parse(userId).id
         if (bidAmount !== '') {
             const bidData = {
+                userId: userId,
                 auction_id: auctionId,
                 yourBidPrice: parseFloat(bidAmount),
                 msg: message,

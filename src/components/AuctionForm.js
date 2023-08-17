@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 
 const AuctionForm = ({ handleCreateAuction }) => {
-  const [showModal, setShowModal] = useState(false);//control visibility
+  const [showModal, setShowModal] = useState(false);
   const [newItem, setNewItem] = useState({
     itemName: '',
     category: '',
@@ -15,9 +15,7 @@ const AuctionForm = ({ handleCreateAuction }) => {
   const createItem = (event) => {
     event.preventDefault();
     handleCreateAuction(newItem.itemName, newItem.category, newItem.description, newItem.startingBid, newItem.startTime, newItem.startDate,
-    );//call function with new item data
-
-    //clear the form field and hide modal
+    );
     setNewItem({
       itemName: '',
       category: '',
@@ -29,8 +27,6 @@ const AuctionForm = ({ handleCreateAuction }) => {
     setShowModal(false);
   };
 
-
-  //update new item with the modified value
   const handleInput = (event) => {
     const { name, value } = event.target;
     setNewItem({ ...newItem, [name]: value });

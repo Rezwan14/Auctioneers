@@ -1,45 +1,87 @@
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
+import { Form, Input, Button, Typography, Card, message } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
-const LoginForm = ({ handleLogin, setUsername, setPassword, username, password, onLoginSuccess }) => {
-  const handleLoginFormSubmit = async (event) => {
-    event.preventDefault()
-    //call hadnlelogin to perform login and onLoginSuccess to handle successful login
-    await handleLogin(event)
-    onLoginSuccess()
+const { Title, Text } = Typography;
+
+const LoginForm = ({
+  handleLogin,
+  setUsername,
+  setPassword,
+  username,
+  password,
+  onLoginSuccess,
+}) => {
+  const handleLoginFormFinish = async () => {
+    try {
+      await handleLogin();
+      onLoginSuccess();
+    } catch (error) {
+      console.log(error);
+      message.error("Login failed. Please check your credentials.");
+    }
   };
 
   return (
-    <div className="lr-outer-container">
-      <div className="lr-container">
-        <h2 className="lr-heading">Log in to application</h2>
-        <div className="lr-box">
-          <form className="lr-form" onSubmit={handleLoginFormSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                name="Username"
-                onChange={({ target }) => setUsername(target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                name="Password"
-                onChange={({ target }) => setPassword(target.value)}
-              />
-            </div>
-            <button id="lrbutton" type="submit">
-              Login
-            </button>
-          </form>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "70vh",
+      }}
+    >
+      <Card style={{ width: 500, padding: 50 }}>
+        <div style={{ textAlign: "center" }}>
+          <Title level={2}>Log in to the Application</Title>
         </div>
-      </div>
+        <br />
+        <br />
+        <Form onFinish={handleLoginFormFinish}>
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[
+              { required: true, message: "Please enter your username" },
+              { min: 2, message: "Username must be at least 2 characters" },
+            ]}
+          >
+            <Input
+              prefix={<UserOutlined />}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+            />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              { required: true, message: "Please enter your password" },
+              { min: 3, message: "Password must be at least 3 characters" },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
+        <div style={{ textAlign: "center" }}>
+          <Text type="secondary">
+            Don't have an account?<Link to="/register"> Register now.</Link>
+          </Text>
+        </div>
+      </Card>
     </div>
   );
 };

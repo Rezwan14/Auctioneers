@@ -20,7 +20,7 @@ export const ParticipantsList = ({ auctionId }) => {
             }
         })
             .then(response => {
-                setParticipants(response.data.bids);
+                setParticipants(response.data.auction);
             })
             .catch(error => {
                 console.error('Error fetching bid data:', error);

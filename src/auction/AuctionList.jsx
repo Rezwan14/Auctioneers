@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Typography, Card, Divider, Spin } from 'antd'; // Import Spin
+import { Row, Col, Typography, Card, Divider, Spin } from 'antd';
 import axios from 'axios';
 import moment from 'moment/moment';
-// import auctionImg from "./assets/download.JFIF"
+import general from "./../assets/general.jpg"
 import AuctionDetail from './AuctionDetails';
 import itemService from "../services/items";
 
@@ -37,19 +37,6 @@ const AuctionList = () => {
             setAuctions(items)
             setLoading(false);
         });
-        // axios.get('http://localhost:3000/api/auction/my', {
-        //     headers: {
-        //         Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDI5MThkM2RlOThlZjNlNzNmYzIxZiIsImlhdCI6MTY5MTg3MjI2NiwiZXhwIjoxNjkxOTA4MjY2fQ.viPjMQj3awafBjGhFtlLeZg6aA21rWHT64gc472CZmw'
-        //     }
-        // })
-        //     .then(response => {
-        //         setAuctions(response.data.data);
-        //         setLoading(false);
-        //     })
-        //     .catch(error => {
-        //         setError(error);
-        //         setLoading(false);
-        //     });
     }, []);
 
     if (loading) {
@@ -105,29 +92,31 @@ const AuctionList = () => {
                             {auctions && auctions.length > 0 ? auctions.map((auction, index) => (
                                 <Col xs={24} sm={12} md={6} lg={6} xl={6} key={auction.id} className='p-2 '>
                                     <Card
-                                        style={{ height: '380px' }}
+                                        style={{ height: '450px' }}
                                         hoverable
                                         onClick={() => handleCardClick(auction)}
                                     >
                                         <div style={{
-                                            background: '#6fb9ff',
-                                            padding: '60px',
+                                            backgroundImage: `url(${general})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                            padding: '20px',
                                             textAlign: 'center',
-                                            borderRadius: '10px',
-                                            height: '180px'
+                                            borderRadius: '5px',
+                                            height: '230px'
                                         }}>
-                                            <h4>{auction.itemName.substr(0, 20) + "..."}</h4>
                                         </div>
                                         <div className='mt-2 '>
                                             <h6 className='mt-1'>By: {auction?.user.lastName}</h6>
+                                            <h4>{auction.itemName.substr(0, 20) + "..."}</h4>
                                             <p>{auction.description.substr(0, 40) + "..."}</p>
                                         </div>
-                                        <p>Category:{auction.category}</p>
-                                        <div className='mt-2 mb-0' style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <h6>Starting Bid: {auction.startingBid}</h6>
-                                            <h6 >Current Bid: {auction.currentBid}</h6>
+                                        <div className='mt-1 mb-0' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <p><b>Category: </b> {auction.category}</p>
+                                            <p><b>Starting Bid: </b>  {auction.startingBid}</p>
+                                            {/* <h6 >Current Bid: {auction.currentBid}</h6> */}
                                         </div>
-                                        <p style={{ fontSize: '12px' }}>End Date & time: {moment(auction.endDate).format("LLLL")}</p>
+                                        <p style={{ fontSize: '12px' }}><b>End Date & time:</b> {moment(auction.endDate).format("LLLL")}</p>
                                     </Card>
                                 </Col>
                             ))

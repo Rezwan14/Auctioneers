@@ -5,6 +5,9 @@ import CountdownTimer from './CountDownTimer';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import moment from 'moment';
+import general from "./../assets/general.jpg"
+import { Link } from 'react-router-dom';
+
 const { Title, Text } = Typography;
 
 
@@ -21,22 +24,16 @@ const AuctionDetail = () => {
     }, [auctionObject])
 
 
-    const image_urls = [
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
-        "https://www.oberlo.com/media/1603969900-productphotog-2.jpg?w=1824&fit=max",
-        "https://image.shutterstock.com/image-photo/product-photography-relax-natural-beauty-260nw-1993589426.jpg",
-        "https://www.borofone.com/wp-content/uploads/2022/04/borofone-bo12-power-bt-headset-headphones.jpg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwpXlBbrnemR6Kbq4Fk5Hj6LeoCYLIXpuIlA&usqp=CAU",
-        "https://www.speakeragency.co.uk/media/h4shzgp0/387840464-690x460.jpg",
-        "https://www.christies.com/media-library/images/features/articles/2021/08/11/misha-kahn-first-design-nft/misha-kahn-design-nft-group.jpg"
-    ]
-
+    const today = moment();
+    const endOfDay = today.endOf('day');
+    const formattedEndOfDay = endOfDay.format('YYYY-MM-DD HH:mm:ss');
 
 
     return (
         <div >
             <Button style={{ marginTop: '10px', marginLeft: '30px' }} type='primary' onClick={() => {
-                localStorage.clear()
+                localStorage.removeItem("auctionDetails")
+                localStorage.removeItem("auctionId")
                 window.location.href = "/listing"
             }}>Back</Button>
             <Layout style={{ padding: '24px', marginTop: '20px', minHeight: '80vh' }}>
@@ -44,7 +41,7 @@ const AuctionDetail = () => {
                 <Row gutter={[24, 24]}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Card style={{ height: '70vh' }}>
-                            <div style={{ background: `url(${image_urls[0]}) center/cover`, height: '400px' }}></div>
+                            <div style={{ background: `url(${general}) center/cover`, height: '400px', borderRadius: '10px' }}></div>
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
@@ -70,22 +67,29 @@ const AuctionDetail = () => {
                                     <Text strong>Starting Bid:</Text>
                                     <Text>{auction?.startingBid}</Text>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Text strong>Current Highest Bid:</Text>
                                     <Text>{auction?.currentBid}</Text>
-                                </div>
+                                </div> */}
                             </div>
                             <div className='mt-5' style={{ fontSize: '14px', color: '#999', textAlign: 'right' }}>
                                 <Text strong>End Date & Time:</Text>
                                 <br />
-                                <Text>{moment(auction?.endDate).format("LLLL")}</Text>
+                                <Text>{moment(formattedEndOfDay).format("LLLL")}</Text>
+                            </div>
+
+                            <div className='d-flex justify-content-center' style={{ marginTop: '50%' }}>
+                                <Link to="/shipment">
+                                    <Button style={{ width: '200px' }} type="primary" >
+                                        Place Order</Button>
+                                </Link>
                             </div>
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Card>
-                            {auction?.endDate ?
-                                <CountdownTimer endDate={auction?.endDate} />
+                            {formattedEndOfDay ?
+                                <CountdownTimer endDate={formattedEndOfDay} />
                                 :
                                 "End Date and Time missing"}
                         </Card>
